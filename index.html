@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Card Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <span class="header-logo">PCB</span>
+        <h1 class="header-title">Profile Card Builder</h1>
+      </div>
+    </header>
+
+    <main class="app-layout">
+      <!-- LEFT PANEL: Form -->
+      <section class="panel panel--form" aria-label="Profile Form">
+        <div class="panel__header">
+          <h2 class="panel__title">Build Your Card</h2>
+          <p class="panel__subtitle">Fill in the details below</p>
+        </div>
+
+        <form id="profileForm" novalidate>
+          <fieldset class="fieldset">
+            <legend class="fieldset__legend">Personal Info</legend>
+
+            <div class="form-group">
+              <label class="form-label" for="fullName">
+                Full Name <span class="required-star" aria-hidden="true">*</span>
+              </label>
+              <input
+                class="form-input"
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="e.g. Sara Ahmed"
+                required
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="jobTitle">
+                Job Title <span class="required-star" aria-hidden="true">*</span>
+              </label>
+              <input
+                class="form-input"
+                type="text"
+                id="jobTitle"
+                name="jobTitle"
+                placeholder="e.g. Frontend Developer"
+                required
+                autocomplete="organization-title"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="bio">Bio</label>
+              <textarea
+                class="form-input form-textarea"
+                id="bio"
+                name="bio"
+                placeholder="A short intro about yourself..."
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="form-group form-group--color">
+              <label class="form-label" for="avatarColor">Avatar Color</label>
+              <div class="color-picker-wrapper">
+                <input
+                  class="form-color"
+                  type="color"
+                  id="avatarColor"
+                  name="avatarColor"
+                  value="#6c63ff"
+                />
+                <span class="color-hex-label" id="colorHexLabel">#6c63ff</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend class="fieldset__legend">Skills</legend>
+            <div class="skills-grid" role="group" aria-label="Select your skills">
+              <div class="skill-option">
+                <input class="skill-checkbox" type="checkbox" id="skill-html" name="skills" value="HTML" />
+                <label class="skill-label" for="skill-html">HTML</label>
+              </div>
+              <div class="skill-option">
+                <input class="skill-checkbox" type="checkbox" id="skill-css" name="skills" value="CSS" />
+                <label class="skill-label" for="skill-css">CSS</label>
+              </div>
+              <div class="skill-option">
+                <input class="skill-checkbox" type="checkbox" id="skill-js" name="skills" value="JavaScript" />
+                <label class="skill-label" for="skill-js">JavaScript</label>
+              </div>
+              <div class="skill-option">
+                <input class="skill-checkbox" type="checkbox" id="skill-react" name="skills" value="React" />
+                <label class="skill-label" for="skill-react">React</label>
+              </div>
+              <div class="skill-option">
+                <input class="skill-checkbox" type="checkbox" id="skill-ts" name="skills" value="TypeScript" />
+                <label class="skill-label" for="skill-ts">TypeScript</label>
+              </div>
+              <div class="skill-option">
+                <input class="skill-checkbox" type="checkbox" id="skill-node" name="skills" value="Node.js" />
+                <label class="skill-label" for="skill-node">Node.js</label>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Inline error message area — no alert() used -->
+          <div
+            class="form-error"
+            id="formError"
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+            hidden
+          ></div>
+
+          <button class="btn-generate" type="submit" id="generateBtn">
+            <span class="btn-text">Generate Card</span>
+            <span class="btn-icon" aria-hidden="true">→</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- RIGHT PANEL: Live card preview -->
+      <section class="panel panel--preview" aria-label="Card Preview">
+        <div class="panel__header">
+          <h2 class="panel__title">Live Preview</h2>
+          <p class="panel__subtitle">Your card appears here</p>
+        </div>
+
+        <div class="card-stage">
+          <article class="profile-card" id="profileCard" aria-live="polite">
+            <!-- Avatar -->
+            <div class="card__avatar" id="cardAvatar">
+              <span class="card__avatar-initials" id="cardInitials">?</span>
+            </div>
+
+            <!-- Card body -->
+            <div class="card__body">
+              <!-- ID selector overrides class selector (specificity demo) -->
+              <h2 class="card__name" id="cardName">Your Name</h2>
+              <p class="card__title" id="cardTitle">Your Job Title</p>
+              <p class="card__bio" id="cardBio">Your bio will appear here once you fill the form.</p>
+
+              <!-- Skill tags rendered dynamically -->
+              <div class="card__skills" id="cardSkills">
+                <span class="skill-tag skill-tag--placeholder">Skills</span>
+              </div>
+            </div>
+
+            <!-- Decorative accent -->
+            <div class="card__accent" id="cardAccent" aria-hidden="true"></div>
+          </article>
+
+          <p class="preview-hint" id="previewHint">Fill the form and click Generate Card ↑</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
